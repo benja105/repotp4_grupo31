@@ -13,18 +13,7 @@ public class Main {
         boolean salir = false;
 
         while (!salir) {
-            System.out.println("Menú de opciones:");
-            System.out.println("1. Registrar terreno");
-            System.out.println("2. Registrar vivienda");
-            System.out.println("3. Registrar cliente");
-            System.out.println("4. Alquiler de vivienda");
-            System.out.println("5. Venta de terreno");
-            System.out.println("6. Consultar inmuebles disponibles");
-            System.out.println("7. Consultar viviendas alquiladas");
-            System.out.println("8. Consultar terrenos vendidos");
-            System.out.println("9. Salir");
-
-            System.out.print("Seleccione una opción: ");
+            mostrarMenu();
             int opcion = scanner.nextInt();
 
             switch (opcion) {
@@ -53,6 +42,9 @@ public class Main {
                     CollectionInmueble.mostrarTerrenosVendidos();
                     break;
                 case 9:
+                    CollectionContrato.mostrarContratos();
+                    break;
+                case 10:
                     salir = true;
                     break;
                 default:
@@ -63,8 +55,23 @@ public class Main {
         scanner.close();
     }
 
+    private static void mostrarMenu() {
+        System.out.println("\nMenú de opciones:");
+        System.out.println("1. Registrar terreno");
+        System.out.println("2. Registrar vivienda");
+        System.out.println("3. Registrar cliente");
+        System.out.println("4. Alquiler de vivienda");
+        System.out.println("5. Venta de terreno");
+        System.out.println("6. Consultar inmuebles disponibles");
+        System.out.println("7. Consultar viviendas alquiladas");
+        System.out.println("8. Consultar terrenos vendidos");
+        System.out.println("9. Consultar contratos");
+        System.out.println("10. Salir");
+        System.out.print("Seleccione una opción: ");
+    }
+
     private static void registrarTerreno(Scanner scanner) {
-        System.out.println("Ingrese los datos del terreno:");
+        System.out.println("\nIngrese los datos del terreno:");
         System.out.print("Código: ");
         String codigo = scanner.next();
         System.out.print("Dirección: ");
@@ -85,7 +92,7 @@ public class Main {
     }
 
     private static void registrarVivienda(Scanner scanner) {
-        System.out.println("Ingrese los datos de la vivienda:");
+        System.out.println("\nIngrese los datos de la vivienda:");
         System.out.print("Código: ");
         String codigo = scanner.next();
         System.out.print("Dirección: ");
@@ -94,17 +101,15 @@ public class Main {
         int habitaciones = scanner.nextInt();
         System.out.print("Precio de alquiler mensual: ");
         double alquilerMensual = scanner.nextDouble();
-        System.out.print("Precio de venta: ");
-        double precio = scanner.nextDouble();
 
-        Vivienda vivienda = new Vivienda(codigo, direccion, precio, true, habitaciones, alquilerMensual);
+        Vivienda vivienda = new Vivienda(codigo, direccion, alquilerMensual, true, habitaciones, alquilerMensual);
         CollectionInmueble.agregarInmueble(vivienda);
 
         System.out.println("Vivienda registrada con éxito.");
     }
 
     private static void registrarCliente(Scanner scanner) {
-        System.out.println("Ingrese los datos del cliente:");
+        System.out.println("\nIngrese los datos del cliente:");
         System.out.print("Nombre: ");
         String nombre = scanner.next();
         System.out.print("Apellido: ");
@@ -125,7 +130,7 @@ public class Main {
     }
 
     private static void realizarAlquiler(Scanner scanner) {
-        System.out.println("Realizar Alquiler de Vivienda:");
+        System.out.println("\nRealizar Alquiler de Vivienda:");
 
         List<Vivienda> viviendasDisponibles = CollectionInmueble.obtenerViviendasDisponibles();
         if (viviendasDisponibles.isEmpty()) {
@@ -168,14 +173,15 @@ public class Main {
         Inmobiliaria inmobiliaria = new Inmobiliaria(nombreInmobiliaria, telefonoInmobiliaria, direccionInmobiliaria);
 
         ContratoAlquiler contrato = new ContratoAlquiler(duracion, precio, gastosInmobiliaria, cliente, viviendaSeleccionada, inmobiliaria, LocalDate.now());
-        viviendaSeleccionada.setDisponible(false); 
+        viviendaSeleccionada.setDisponible(false); // Se marca la vivienda como no disponible.
+        CollectionContrato.agregarContrato(contrato);
 
         System.out.println("Alquiler realizado con éxito. Datos del contrato:");
         contrato.mostrarDatos();
     }
 
     private static void realizarVenta(Scanner scanner) {
-        System.out.println("Realizar Venta de Terreno:");
+        System.out.println("\nRealizar Venta de Terreno:");
 
         List<Terreno> terrenosDisponibles = CollectionInmueble.obtenerTerrenosDisponibles();
         if (terrenosDisponibles.isEmpty()) {
@@ -214,7 +220,8 @@ public class Main {
         Inmobiliaria inmobiliaria = new Inmobiliaria(nombreInmobiliaria, telefonoInmobiliaria, direccionInmobiliaria);
 
         ContratoCompraVentaTerreno contrato = new ContratoCompraVentaTerreno(comprador, terrenoSeleccionado, impuestos, inmobiliaria, LocalDate.now());
-        terrenoSeleccionado.setDisponible(false);
+        terrenoSeleccionado.setDisponible(false); // Se marca el terreno como no disponible.
+        CollectionContrato.agregarContrato(contrato);
 
         System.out.println("Venta realizada con éxito. Datos del contrato:");
         contrato.mostrarDatos();

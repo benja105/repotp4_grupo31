@@ -2,31 +2,23 @@ package ar.edu.unju.escmi.tp4.dominio;
 
 import java.time.LocalDate;
 
-public class ContratoAlquiler {
+public class ContratoAlquiler extends Contrato {
     private int duracion; // En meses
     private double precio;
     private double gastosInmobiliaria;
-    private Cliente cliente;
     private Vivienda vivienda;
-    private Inmobiliaria inmobiliaria;
-    private LocalDate fechaContrato;
 
     public ContratoAlquiler(int duracion, double precio, double gastosInmobiliaria, Cliente cliente, Vivienda vivienda, Inmobiliaria inmobiliaria, LocalDate fechaContrato) {
+        super(cliente, inmobiliaria, fechaContrato);
         this.duracion = duracion;
         this.precio = precio;
         this.gastosInmobiliaria = gastosInmobiliaria;
-        this.cliente = cliente;
         this.vivienda = vivienda;
-        this.inmobiliaria = inmobiliaria;
-        this.fechaContrato = fechaContrato;
     }
 
-    public double calcularMontoTotal() {
-        return precio + gastosInmobiliaria;
-    }
-
+    @Override
     public void mostrarDatos() {
-        System.out.println("Contrato de Alquiler: Duración: " + duracion + " meses, Precio: " + precio + ", Gastos de Inmobiliaria: " + gastosInmobiliaria + ", Monto Total: " + calcularMontoTotal() + ", Fecha Contrato: " + fechaContrato);
+        System.out.println("Contrato de Alquiler: Duración: " + duracion + " meses, Precio: " + precio + ", Gastos de Inmobiliaria: " + gastosInmobiliaria + ", Monto Total: " + (precio + gastosInmobiliaria) + ", Fecha Contrato: " + fechaContrato);
     }
 
 	public int getDuracion() {
