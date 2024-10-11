@@ -1,50 +1,32 @@
 package ar.edu.unju.escmi.tp4.dominio;
 
 public abstract class Inmueble {
-    protected String codigo;
-    protected String direccion;
+	
+	protected String codigo;
     protected double precio;
-    protected boolean disponible;
+    protected boolean estado;
 
-    public Inmueble(String codigo, String direccion, double precio, boolean disponible) {
+    public Inmueble(String codigo, double precio, boolean estado) {
         this.codigo = codigo;
-        this.direccion = direccion;
         this.precio = precio;
-        this.disponible = disponible;
+        this.estado = estado;
+    } 
+
+    public String getCodigo() {
+        return codigo;
     }
 
-    public abstract void mostrarDatos();
+    public double getPrecio() {
+        return precio;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public void setEstado(boolean estado) {
+    	this.estado = estado;
+    }
+    
+    public boolean isEstado() {
+        return estado;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-	public double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-
-	public boolean isDisponible() {
-		return disponible;
-	}
-
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
-	}
-	
+    public abstract void mostrarDatos(); 
 }
